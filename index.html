@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    
     <style>
         * {
             margin: 0;
@@ -344,254 +345,87 @@
             transform: scale(1.1);
         }
 
-     <!-- Product Details Modal -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('productModal')">×</button>
-            <div class="product-details" id="productDetailsContent">
-                <!-- Product details will be inserted here -->
-            </div>
-        </div>
-    </div>
+        /* Product Details Modal */
+        .product-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
 
-    <!-- Contact Us Modal -->
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('contactModal')">×</button>
-            <h2>Contact Us</h2>
-            <p style="color: #cccccc; margin-bottom: 2rem; font-size: 1.2rem;">Choose your preferred way to reach us</p>
-            <div style="display: grid; gap: 1.5rem;">
-                <a href="https://instagram.com" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(220, 20, 60, 0.2); text-decoration: none; color: white; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(220, 20, 60, 0.1)'; this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.03)'; this.style.borderColor='rgba(220, 20, 60, 0.2)'">
-                    <span style="font-size: 2rem;">📷</span>
-                    <div>
-                        <h4 style="color: var(--red); margin-bottom: 0.3rem;">Instagram</h4>
-                        <p style="color: #999; margin: 0;">@nexusfashion</p>
-                    </div>
-                </a>
-                <a href="https://facebook.com" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(220, 20, 60, 0.2); text-decoration: none; color: white; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(220, 20, 60, 0.1)'; this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.03)'; this.style.borderColor='rgba(220, 20, 60, 0.2)'">
-                    <span style="font-size: 2rem;">📘</span>
-                    <div>
-                        <h4 style="color: var(--red); margin-bottom: 0.3rem;">Facebook</h4>
-                        <p style="color: #999; margin: 0;">Nexus Fashion Official</p>
-                    </div>
-                </a>
-                <a href="https://twitter.com" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(220, 20, 60, 0.2); text-decoration: none; color: white; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(220, 20, 60, 0.1)'; this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.03)'; this.style.borderColor='rgba(220, 20, 60, 0.2)'">
-                    <span style="font-size: 2rem;">🐦</span>
-                    <div>
-                        <h4 style="color: var(--red); margin-bottom: 0.3rem;">Twitter</h4>
-                        <p style="color: #999; margin: 0;">@nexusfashion</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+        .product-details-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
 
-    <!-- Shipping & Returns Modal -->
-    <div id="shippingModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('shippingModal')">×</button>
-            <h2>Shipping & Returns</h2>
-            
-            <div style="margin-top: 2rem;">
-                <h3 style="color: var(--red); font-size: 1.8rem; margin-bottom: 1rem;">Shipping Policy</h3>
-                <div style="color: #cccccc; font-size: 1.1rem; line-height: 1.8;">
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Free Worldwide Shipping:</strong> Complimentary shipping on all orders over $500.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Standard Delivery:</strong> 5-7 business days for orders under $500 ($25 flat rate).</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Express Delivery:</strong> 2-3 business days ($50 additional charge).</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Order Processing:</strong> All orders are processed within 24-48 hours on business days.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Tracking:</strong> You'll receive a tracking number via email once your order ships.</p>
-                </div>
-                
-                <h3 style="color: var(--red); font-size: 1.8rem; margin: 2rem 0 1rem;">Returns Policy</h3>
-                <div style="color: #cccccc; font-size: 1.1rem; line-height: 1.8;">
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">30-Day Returns:</strong> Return any unworn item within 30 days for a full refund.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Condition:</strong> Items must be in original condition with all tags attached.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Free Returns:</strong> We provide a prepaid return label for your convenience.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Refund Processing:</strong> Refunds are processed within 5-7 business days after receiving the return.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Final Sale Items:</strong> Items marked as "Final Sale" cannot be returned or exchanged.</p>
-                    <p style="margin-bottom: 1rem;"><strong style="color: white;">Exchanges:</strong> We offer free exchanges for different sizes or colors (subject to availability).</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        .product-details-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
 
-    <!-- Size Guide Modal -->
-    <div id="sizeModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('sizeModal')">×</button>
-            <h2>Size Guide</h2>
-            
-            <div style="margin-top: 2rem;">
-                <p style="color: #cccccc; font-size: 1.2rem; margin-bottom: 2rem;">Find your perfect fit with our comprehensive size guide. All measurements are in inches.</p>
-                
-                <h3 style="color: var(--red); font-size: 1.8rem; margin-bottom: 1rem;">Dresses & Tops</h3>
-                <div style="overflow-x: auto; margin-bottom: 2rem;">
-                    <table style="width: 100%; border-collapse: collapse; color: #cccccc;">
-                        <thead>
-                            <tr style="border-bottom: 2px solid var(--red);">
-                                <th style="padding: 1rem; text-align: left; color: white;">Size</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">Bust</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">Waist</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">Hips</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>XS</strong></td>
-                                <td style="padding: 1rem;">31-32"</td>
-                                <td style="padding: 1rem;">24-25"</td>
-                                <td style="padding: 1rem;">34-35"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>S</strong></td>
-                                <td style="padding: 1rem;">33-34"</td>
-                                <td style="padding: 1rem;">26-27"</td>
-                                <td style="padding: 1rem;">36-37"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>M</strong></td>
-                                <td style="padding: 1rem;">35-36"</td>
-                                <td style="padding: 1rem;">28-29"</td>
-                                <td style="padding: 1rem;">38-39"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>L</strong></td>
-                                <td style="padding: 1rem;">37-39"</td>
-                                <td style="padding: 1rem;">30-32"</td>
-                                <td style="padding: 1rem;">40-42"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>XL</strong></td>
-                                <td style="padding: 1rem;">40-42"</td>
-                                <td style="padding: 1rem;">33-35"</td>
-                                <td style="padding: 1rem;">43-45"</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <h3 style="color: var(--red); font-size: 1.8rem; margin-bottom: 1rem;">Shoes</h3>
-                <div style="overflow-x: auto; margin-bottom: 2rem;">
-                    <table style="width: 100%; border-collapse: collapse; color: #cccccc;">
-                        <thead>
-                            <tr style="border-bottom: 2px solid var(--red);">
-                                <th style="padding: 1rem; text-align: left; color: white;">US Size</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">EU Size</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">UK Size</th>
-                                <th style="padding: 1rem; text-align: left; color: white;">Foot Length</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>5</strong></td>
-                                <td style="padding: 1rem;">35</td>
-                                <td style="padding: 1rem;">2.5</td>
-                                <td style="padding: 1rem;">8.5"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>6</strong></td>
-                                <td style="padding: 1rem;">36</td>
-                                <td style="padding: 1rem;">3.5</td>
-                                <td style="padding: 1rem;">9"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>7</strong></td>
-                                <td style="padding: 1rem;">37</td>
-                                <td style="padding: 1rem;">4.5</td>
-                                <td style="padding: 1rem;">9.5"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>8</strong></td>
-                                <td style="padding: 1rem;">38</td>
-                                <td style="padding: 1rem;">5.5</td>
-                                <td style="padding: 1rem;">10"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>9</strong></td>
-                                <td style="padding: 1rem;">39</td>
-                                <td style="padding: 1rem;">6.5</td>
-                                <td style="padding: 1rem;">10.5"</td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                                <td style="padding: 1rem;"><strong>10</strong></td>
-                                <td style="padding: 1rem;">40</td>
-                                <td style="padding: 1rem;">7.5</td>
-                                <td style="padding: 1rem;">11"</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div style="background: rgba(220, 20, 60, 0.1); padding: 1.5rem; border-left: 3px solid var(--red); margin-top: 2rem;">
-                    <h4 style="color: var(--red); margin-bottom: 0.5rem;">How to Measure</h4>
-                    <p style="color: #cccccc; line-height: 1.8; margin: 0.5rem 0;"><strong style="color: white;">Bust:</strong> Measure around the fullest part of your bust.</p>
-                    <p style="color: #cccccc; line-height: 1.8; margin: 0.5rem 0;"><strong style="color: white;">Waist:</strong> Measure around the narrowest part of your natural waistline.</p>
-                    <p style="color: #cccccc; line-height: 1.8; margin: 0.5rem 0;"><strong style="color: white;">Hips:</strong> Measure around the fullest part of your hips.</p>
-                    <p style="color: #cccccc; line-height: 1.8; margin: 0.5rem 0;"><strong style="color: white;">Foot Length:</strong> Stand on a flat surface and measure from heel to longest toe.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        .product-details-price {
+            font-size: 2rem;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
 
-    <!-- FAQ Modal -->
-    <div id="faqModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('faqModal')">×</button>
-            <h2>Frequently Asked Questions</h2>
-            
-            <div style="margin-top: 2rem;">
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">How do I place an order?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Browse our collections, add items to your favorites, and contact us through social media to complete your purchase. Our team will guide you through the payment and delivery process.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">What payment methods do you accept?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">We accept all major credit cards (Visa, MasterCard, American Express), PayPal, bank transfers, and select cryptocurrency payments. All transactions are secured with industry-standard encryption.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Are your products authentic?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Absolutely! Every item in our collection is 100% authentic and sourced directly from designers or authorized distributors. Each luxury piece comes with a certificate of authenticity and original packaging.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Can I track my order?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Yes! Once your order ships, you'll receive a confirmation email with a tracking number. You can track your package in real-time through our shipping partner's website.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Do you offer international shipping?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Yes, we ship worldwide! Free shipping is available on orders over $500. International orders may be subject to customs duties and taxes, which are the responsibility of the customer.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">What if the item doesn't fit?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">We offer free exchanges within 30 days of purchase. Simply contact us, and we'll send you a prepaid return label. Once we receive the item, we'll ship your new size immediately (subject to availability).</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Are sale items returnable?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Most sale items are returnable within our standard 30-day policy. However, items marked as "Final Sale" cannot be returned or exchanged. This will be clearly indicated on the product page.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Do you offer gift wrapping?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Yes! We offer complimentary luxury gift wrapping with every order. Your items will arrive in our signature black and red packaging with a personalized message card upon request.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(220, 20, 60, 0.2);">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">How do I care for my luxury items?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Each item comes with detailed care instructions. Generally, we recommend professional dry cleaning for dresses and delicate items, and proper storage in dust bags. Leather goods should be treated with leather conditioner regularly.</p>
-                </div>
-                
-                <div class="faq-item" style="margin-bottom: 0;">
-                    <h3 style="color: var(--red); font-size: 1.5rem; margin-bottom: 0.8rem;">Do you have a VIP or loyalty program?</h3>
-                    <p style="color: #cccccc; line-height: 1.8;">Yes! Join our VIP list by subscribing to our newsletter. VIP members receive early access to new collections, exclusive discounts, private sales, personalized styling tips, and invitations to special events.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        .product-details-description {
+            color: #cccccc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .product-details-specs {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--red);
+        }
+
+        .product-details-specs h4 {
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .product-details-specs ul {
+            list-style: none;
+        }
+
+        .product-details-specs li {
+            color: #cccccc;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .product-details-specs li:last-child {
+            border-bottom: none;
+        }
+
+        .product-details-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-add-favorite {
+            flex: 1;
+            background: transparent;
+            border: 2px solid var(--red);
+            color: var(--red);
+            padding: 1rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-favorite:hover,
+        .btn-add-favorite.active {
+            background: var(--red);
+            color: white;
+        }
 
         /* Hero Section */
         .hero {
@@ -1029,9 +863,14 @@
 
         /* Footer */
         footer {
+            
+
+            
             background: linear-gradient(to bottom, var(--black), var(--dark-red));
             padding: 4rem 2rem 2rem;
             border-top: 1px solid rgba(220, 20, 60, 0.3);
+            
+            
         }
 
         .footer-content {
@@ -1287,6 +1126,93 @@
     </section>
 
     <!-- Collections -->
+
+    <section id="customer-service" class="customer-service fade-in">
+    <h2>Customer Service</h2>
+    <ul>
+        <li><button onclick="contactUs()">Contact Us</button></li>
+        <li><button onclick="showShippingReturns()">Shipping & Returns</button></li>
+        <li><button onclick="showSizeGuide()">Size Guide</button></li>
+        <li><button onclick="showFAQ()">FAQ</button></li>
+    </ul>
+</section>
+
+<!-- Customer Service Modal -->
+<div id="customerServiceModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
+        <div id="customerServiceContent"></div>
+    </div>
+</div>
+
+// Contact Us redirect
+function contactUs() {
+    const socialLinks = [
+        { name: 'Instagram', url: 'https://instagram.com/YourPage' },
+        { name: 'Facebook', url: 'https://facebook.com/YourPage' },
+        { name: 'WhatsApp', url: 'https://wa.me/1234567890' }
+    ];
+
+    let choice = prompt(
+        'Choose a contact method:\n1. Instagram\n2. Facebook\n3. WhatsApp',
+        '1'
+    );
+
+    if (!choice) return;
+
+    const index = parseInt(choice) - 1;
+    if (socialLinks[index]) {
+        window.open(socialLinks[index].url, '_blank');
+    } else {
+        alert('Invalid choice!');
+    }
+}
+
+// Shipping & Returns popup
+function showShippingReturns() {
+    const content = `
+        <h3>Shipping & Returns</h3>
+        <p>All orders are processed within 2-3 business days. Shipping times vary by location. 
+        You can return items within 30 days of purchase. Items must be unused and in original packaging.</p>
+    `;
+    document.getElementById('customerServiceContent').innerHTML = content;
+    openModal('customerServiceModal');
+}
+
+// Size Guide popup
+function showSizeGuide() {
+    const content = `
+        <h3>Size Guide</h3>
+        <p>Our clothing sizes are designed for international standards. Please check the measurements below before ordering:</p>
+        <ul>
+            <li>Small (S): Bust 34-36", Waist 26-28"</li>
+            <li>Medium (M): Bust 36-38", Waist 28-30"</li>
+            <li>Large (L): Bust 38-40", Waist 30-32"</li>
+        </ul>
+    `;
+    document.getElementById('customerServiceContent').innerHTML = content;
+    openModal('customerServiceModal');
+}
+
+// FAQ popup
+function showFAQ() {
+    const content = `
+        <h3>Frequently Asked Questions</h3>
+        <p><strong>Q1:</strong> How long does shipping take?<br>
+        <strong>A:</strong> 2-7 business days depending on your location.</p>
+        <p><strong>Q2:</strong> Can I exchange an item?<br>
+        <strong>A:</strong> Yes, exchanges are allowed within 30 days of purchase.</p>
+        <p><strong>Q3:</strong> How do I contact customer support?<br>
+        <strong>A:</strong> Use the Contact Us option to reach us via social media.</p>
+    `;
+    document.getElementById('customerServiceContent').innerHTML = content;
+    openModal('customerServiceModal');
+}
+
+
+
+
+
     <section id="collections" class="fade-in">
         <div class="section-header">
             <h2 class="section-title">Featured Collections</h2>
