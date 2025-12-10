@@ -1,0 +1,10 @@
+<!-- Customer Service Section -->
+<section id="customer-service" class="customer-service fade-in">
+    <h2>Customer Service</h2>
+    <ul>
+        <li><button class="btn-primary" onclick="contactUs()">Contact Us</button></li>
+        <li><button class="btn-primary" onclick="showShippingReturns()">Shipping & Returns</button></li>
+        <li><button class="btn-primary" onclick="showSizeGuide()">Size Guide</button></li>
+        <li><button class="btn-primary" onclick="showFAQ()">FAQ</button></li>
+    </ul>
+</section>

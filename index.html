@@ -1393,21 +1393,22 @@
     <!-- Customer Service Section -->
 <section id="customer-service" class="customer-service fade-in">
     <h2>Customer Service</h2>
-    <ul>
-        <li><button class="btn-primary" onclick="contactUs()">Contact Us</button></li>
-        <li><button class="btn-primary" onclick="showShippingReturns()">Shipping & Returns</button></li>
-        <li><button class="btn-primary" onclick="showSizeGuide()">Size Guide</button></li>
-        <li><button class="btn-primary" onclick="showFAQ()">FAQ</button></li>
-    </ul>
+    <div class="customer-service-options">
+        <button class="btn-primary" onclick="contactUs()">Contact Us</button>
+        <button class="btn-primary" onclick="showPopup('Shipping & Returns', shippingReturnsContent)">Shipping & Returns</button>
+        <button class="btn-primary" onclick="showPopup('Size Guide', sizeGuideContent)">Size Guide</button>
+        <button class="btn-primary" onclick="showPopup('FAQ', faqContent)">FAQ</button>
+    </div>
 </section>
 
-<!-- Customer Service Modal -->
+<!-- Reuse existing modal for popups -->
 <div id="customerServiceModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
         <div id="customerServiceContent"></div>
     </div>
 </div>
+
 
 
 
@@ -2034,7 +2035,43 @@
         buildSearchIndex();
 
 
-        // Contact Us redirect
+        // Content for popups
+const shippingReturnsContent = `
+    <h3>Shipping & Returns</h3>
+    <p>All orders are processed within 2-3 business days. Shipping times vary by location. 
+    You can return items within 30 days of purchase. Items must be unused and in original packaging.</p>
+`;
+
+const sizeGuideContent = `
+    <h3>Size Guide</h3>
+    <p>Our clothing sizes follow international standards. Please check measurements before ordering:</p>
+    <ul>
+        <li>Small (S): Bust 34-36", Waist 26-28"</li>
+        <li>Medium (M): Bust 36-38", Waist 28-30"</li>
+        <li>Large (L): Bust 38-40", Waist 30-32"</li>
+    </ul>
+`;
+
+const faqContent = `
+    <h3>Frequently Asked Questions</h3>
+    <p><strong>Q1:</strong> How long does shipping take?<br>
+    <strong>A:</strong> 2-7 business days depending on location.</p>
+    <p><strong>Q2:</strong> Can I exchange an item?<br>
+    <strong>A:</strong> Yes, exchanges are allowed within 30 days of purchase.</p>
+    <p><strong>Q3:</strong> How do I contact customer support?<br>
+    <strong>A:</strong> Use the Contact Us option to reach us via social media.</p>
+`;
+
+// Generic function to show popup inside Customer Service modal
+function showPopup(title, content) {
+    document.getElementById('customerServiceContent').innerHTML = `
+        <h2>${title}</h2>
+        ${content}
+    `;
+    openModal('customerServiceModal');
+}
+
+// Contact Us redirect
 function contactUs() {
     const socialLinks = [
         { name: 'Instagram', url: 'https://instagram.com/YourPage' },
@@ -2056,48 +2093,6 @@ function contactUs() {
         alert('Invalid choice!');
     }
 }
-
-// Shipping & Returns popup
-function showShippingReturns() {
-    const content = `
-        <h3>Shipping & Returns</h3>
-        <p>All orders are processed within 2-3 business days. Shipping times vary by location. 
-        You can return items within 30 days of purchase. Items must be unused and in original packaging.</p>
-    `;
-    document.getElementById('customerServiceContent').innerHTML = content;
-    openModal('customerServiceModal');
-}
-
-// Size Guide popup
-function showSizeGuide() {
-    const content = `
-        <h3>Size Guide</h3>
-        <p>Our clothing sizes are designed for international standards. Please check the measurements below before ordering:</p>
-        <ul>
-            <li>Small (S): Bust 34-36", Waist 26-28"</li>
-            <li>Medium (M): Bust 36-38", Waist 28-30"</li>
-            <li>Large (L): Bust 38-40", Waist 30-32"</li>
-        </ul>
-    `;
-    document.getElementById('customerServiceContent').innerHTML = content;
-    openModal('customerServiceModal');
-}
-
-// FAQ popup
-function showFAQ() {
-    const content = `
-        <h3>Frequently Asked Questions</h3>
-        <p><strong>Q1:</strong> How long does shipping take?<br>
-        <strong>A:</strong> 2-7 business days depending on your location.</p>
-        <p><strong>Q2:</strong> Can I exchange an item?<br>
-        <strong>A:</strong> Yes, exchanges are allowed within 30 days of purchase.</p>
-        <p><strong>Q3:</strong> How do I contact customer support?<br>
-        <strong>A:</strong> Use the Contact Us option to reach us via social media.</p>
-    `;
-    document.getElementById('customerServiceContent').innerHTML = content;
-    openModal('customerServiceModal');
-}
-
 
 
 
