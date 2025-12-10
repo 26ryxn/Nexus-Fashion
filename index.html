@@ -1392,6 +1392,25 @@
 
 
 
+    <section id="customer-service" class="customer-service fade-in">
+    <h2>Customer Service</h2>
+    <ul class="customer-service-list">
+        <li><a href="#" onclick="contactUs(); return false;">Contact Us</a></li>
+        <li><a href="#" onclick="showShippingReturns(); return false;">Shipping & Returns</a></li>
+        <li><a href="#" onclick="showSizeGuide(); return false;">Size Guide</a></li>
+        <li><a href="#" onclick="showFAQ(); return false;">FAQ</a></li>
+    </ul>
+</section>
+
+<!-- Modal reused for popups -->
+<div id="customerServiceModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
+        <div id="customerServiceContent"></div>
+    </div>
+</div>
+
+
 
 
 
@@ -2019,6 +2038,67 @@
 
 
 
+
+function contactUs() {
+    const content = `
+        <h3>Contact Us</h3>
+        <p>Please choose a contact method below:</p>
+        <ul>
+            <li><a href="https://instagram.com/YourPage" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/YourPage" target="_blank">Facebook</a></li>
+            <li><a href="https://wa.me/212600000000" target="_blank">WhatsApp</a></li>
+        </ul>
+    `;
+    document.getElementById("customerServiceContent").innerHTML = content;
+    openModal("customerServiceModal");
+}
+
+
+
+
+function showShippingReturns() {
+    const content = `
+        <h3>Shipping & Returns</h3>
+        <p>• Orders are processed within 2–3 business days.</p>
+        <p>• Shipping time: 2–7 business days depending on location.</p>
+        <p>• Returns accepted within 30 days if item is unused & in original packaging.</p>
+    `;
+    document.getElementById("customerServiceContent").innerHTML = content;
+    openModal("customerServiceModal");
+}
+
+
+function showSizeGuide() {
+    const content = `
+        <h3>Size Guide</h3>
+        <p>Please check the measurements before ordering:</p>
+        <ul>
+            <li>S — Bust 34–36" / Waist 26–28"</li>
+            <li>M — Bust 36–38" / Waist 28–30"</li>
+            <li>L — Bust 38–40" / Waist 30–32"</li>
+        </ul>
+    `;
+    document.getElementById("customerServiceContent").innerHTML = content;
+    openModal("customerServiceModal");
+}
+
+
+function showFAQ() {
+    const content = `
+        <h3>FAQ</h3>
+
+        <p><strong>How long does shipping take?</strong><br>
+        2–7 business days depending on destination.</p>
+
+        <p><strong>Can I exchange an item?</strong><br>
+        Yes — within 30 days if unused.</p>
+
+        <p><strong>How do I contact support?</strong><br>
+        Use the Contact Us option to reach us on Instagram, Facebook, or WhatsApp.</p>
+    `;
+    document.getElementById("customerServiceContent").innerHTML = content;
+    openModal("customerServiceModal");
+}
 
 
 
