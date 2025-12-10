@@ -136,7 +136,7 @@
             transform: scale(1.1);
         }
 
-        .cart-count {
+        .favorites-count {
             position: absolute;
             top: -8px;
             right: -8px;
@@ -379,7 +379,12 @@
             transform: scale(1.1);
         }
 
-        .add-to-cart-btn {
+        .product-heart.favorited {
+            background: var(--red);
+            opacity: 1;
+        }
+
+        .view-details-btn {
             width: calc(100% - 2rem);
             position: absolute;
             bottom: 1rem;
@@ -395,11 +400,11 @@
             transition: all 0.3s ease;
         }
 
-        .product-card:hover .add-to-cart-btn {
+        .product-card:hover .view-details-btn {
             transform: translateY(0);
         }
 
-        .add-to-cart-btn:hover {
+        .view-details-btn:hover {
             background: var(--red);
             color: white;
         }
@@ -719,10 +724,9 @@
 
             <div class="header-icons">
                 <button class="icon-btn">🔍</button>
-                <button class="icon-btn">👤</button>
-                <button class="icon-btn" id="cart-btn">
-                    🛍️
-                    <span class="cart-count" id="cart-count">0</span>
+                <button class="icon-btn" id="favorites-btn">
+                    ♥
+                    <span class="favorites-count" id="favorites-count">0</span>
                 </button>
                 <button class="mobile-menu-btn">☰</button>
             </div>
@@ -753,9 +757,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1611484907270-d1e8d10e0f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWRoZWFkJTIwd29tYW4lMjBibGFjayUyMGRyZXNzfGVufDF8fHx8MTc2NTIwOTg5Mnww&ixlib=rb-4.1.0&q=80&w=1080" alt="Black Dress" class="product-image">
                     <span class="product-badge">NEW</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -768,9 +772,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjBtb2RlbCUyMGVsZWdhbnR8ZW58MXx8fHwxNzY1MjA5ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Blonde Model" class="product-image">
                     <span class="product-badge">BESTSELLER</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -783,9 +787,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh5JTIwcmVkJTIwZHJlc3MlMjB3b21hbnxlbnwxfHx8fDE3NjUyMDk4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Red Dress" class="product-image">
                     <span class="product-badge">HOT</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -808,9 +812,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWRoZWFkJTIwZmFzaGlvbiUyMG1vZGVsfGVufDF8fHx8MTc2NTIwOTg5NHww&ixlib=rb-4.1.0&q=80&w=1080" alt="Redhead Model" class="product-image">
                     <span class="product-badge">LIMITED</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -823,9 +827,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjB3b21hbiUyMGxlYXRoZXIlMjBqYWNrZXR8ZW58MXx8fHwxNzY1MjA5ODk0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Leather Jacket" class="product-image">
                     <span class="product-badge">TRENDING</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -837,9 +841,9 @@
             <div class="product-card">
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHJlZCUyMGxpcHN0aWNrJTIwZmFzaGlvbnxlbnwxfHx8fDE3NjUyMDk4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Fashion Portrait" class="product-image">
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -872,9 +876,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1677059794444-e39a4cf11fdd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWRoZWFkJTIwd29tYW4lMjBwb3J0cmFpdHxlbnwxfHx8fDE3NjUyMDk4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Portrait" class="product-image">
                     <span class="product-badge">EXCLUSIVE</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -887,9 +891,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1750032439477-443d414ac4d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh5JTIwYmxhY2slMjBvdXRmaXQlMjB3b21hbnxlbnwxfHx8fDE3NjUyMDk4OTV8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Black Outfit" class="product-image">
                     <span class="product-badge">NEW</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -902,9 +906,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/flagged/photo-1564485377544-ce65ce5187df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjB3b21hbiUyMHJlZCUyMGRyZXNzfGVufDF8fHx8MTc2NTIwOTg5Mnww&ixlib=rb-4.1.0&q=80&w=1080" alt="Red Dress" class="product-image">
                     <span class="product-badge">BESTSELLER</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -926,9 +930,9 @@
             <div class="product-card">
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1551977021-af54e6399e55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjB3b21hbiUyMGhlZWxzfGVufDF8fHx8MTc2NTIwOTg5NXww&ixlib=rb-4.1.0&q=80&w=1080" alt="Heels" class="product-image">
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -941,9 +945,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1569563359268-b9a106a7b8a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWRoZWFkJTIwd29tYW4lMjBzdW5nbGFzc2VzfGVufDF8fHx8MTc2NTIwOTg5Nnww&ixlib=rb-4.1.0&q=80&w=1080" alt="Sunglasses" class="product-image">
                     <span class="product-badge">TRENDING</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -956,9 +960,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjBtb2RlbCUyMGVsZWdhbnR8ZW58MXx8fHwxNzY1MjA5ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Jewelry" class="product-image">
                     <span class="product-badge">EXCLUSIVE</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -970,9 +974,9 @@
             <div class="product-card">
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWRoZWFkJTIwZmFzaGlvbiUyMG1vZGVsfGVufDF8fHx8MTc2NTIwOTg5NHww&ixlib=rb-4.1.0&q=80&w=1080" alt="Accessories" class="product-image">
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -991,14 +995,14 @@
             <p>Every piece is carefully curated and verified for authenticity</p>
         </div>
         <div class="feature">
-            <div class="feature-icon">🔒</div>
-            <h3>Secure Shopping</h3>
-            <p>Shop with confidence using our encrypted payment system</p>
+            <div class="feature-icon">🚚</div>
+            <h3>Worldwide Delivery</h3>
+            <p>Complimentary worldwide shipping on orders over $500</p>
         </div>
         <div class="feature">
-            <div class="feature-icon">🚚</div>
-            <h3>Free Shipping</h3>
-            <p>Complimentary worldwide shipping on orders over $500</p>
+            <div class="feature-icon">💎</div>
+            <h3>Exclusive Designs</h3>
+            <p>Limited edition pieces from top luxury designers</p>
         </div>
     </div>
 
@@ -1014,9 +1018,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9uZGUlMjB3b21hbiUyMGxlYXRoZXIlMjBqYWNrZXR8ZW58MXx8fHwxNzY1MjA5ODk0fDA&ixlib=rb-4.1.0&q=80&w=1080" alt="Sale Item" class="product-image">
                     <span class="product-badge">-30%</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -1029,9 +1033,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHJlZCUyMGxpcHN0aWNrJTIwZmFzaGlvbnxlbnwxfHx8fDE3NjUyMDk4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Sale Item" class="product-image">
                     <span class="product-badge">-40%</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -1044,9 +1048,9 @@
                 <div class="product-image-container">
                     <img src="https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh5JTIwcmVkJTIwZHJlc3MlMjB3b21hbnxlbnwxfHx8fDE3NjUyMDk4OTR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Sale Item" class="product-image">
                     <span class="product-badge">-25%</span>
-                    <button class="product-heart">♥</button>
+                    <button class="product-heart" onclick="toggleFavorite(this)">♥</button>
                     <div class="product-overlay"></div>
-                    <button class="add-to-cart-btn" onclick="addToCart()">ADD TO CART</button>
+                    <button class="view-details-btn">VIEW DETAILS</button>
                 </div>
                 <div class="product-info">
                     <div class="stars">★★★★★</div>
@@ -1061,7 +1065,7 @@
     <div class="newsletter">
         <h2>Join Our VIP List</h2>
         <p>Get exclusive access to new collections, private sales, and styling tips</p>
-        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showThankYou();">
             <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
             <button type="submit" class="btn-primary">SUBSCRIBE</button>
         </form>
@@ -1091,18 +1095,18 @@
 
             <div class="footer-section">
                 <h3>Customer Service</h3>
-                <a href="#">Contact Us</a>
-                <a href="#">Shipping & Returns</a>
-                <a href="#">Size Guide</a>
-                <a href="#">FAQ</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#shipping">Shipping & Returns</a>
+                <a href="#size">Size Guide</a>
+                <a href="#faq">FAQ</a>
             </div>
 
             <div class="footer-section">
                 <h3>About</h3>
-                <a href="#">Our Story</a>
-                <a href="#">Sustainability</a>
-                <a href="#">Careers</a>
-                <a href="#">Privacy Policy</a>
+                <a href="#story">Our Story</a>
+                <a href="#sustainability">Sustainability</a>
+                <a href="#careers">Careers</a>
+                <a href="#privacy">Privacy Policy</a>
             </div>
         </div>
 
@@ -1112,19 +1116,31 @@
     </footer>
 
     <script>
-        // Cart functionality
-        let cartCount = 0;
+        // Favorites functionality
+        let favoritesCount = 0;
         
-        function addToCart() {
-            cartCount++;
-            document.getElementById('cart-count').textContent = cartCount;
+        function toggleFavorite(button) {
+            button.classList.toggle('favorited');
+            
+            if (button.classList.contains('favorited')) {
+                favoritesCount++;
+            } else {
+                favoritesCount--;
+            }
+            
+            document.getElementById('favorites-count').textContent = favoritesCount;
             
             // Add animation
-            const cartBtn = document.getElementById('cart-btn');
-            cartBtn.style.transform = 'scale(1.2)';
+            const favoritesBtn = document.getElementById('favorites-btn');
+            favoritesBtn.style.transform = 'scale(1.2)';
             setTimeout(() => {
-                cartBtn.style.transform = 'scale(1)';
+                favoritesBtn.style.transform = 'scale(1)';
             }, 200);
+        }
+
+        // Newsletter thank you message
+        function showThankYou() {
+            alert('Thank you for joining our VIP list! Stay tuned for exclusive offers.');
         }
 
         // Header scroll effect
