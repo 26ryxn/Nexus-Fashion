@@ -1390,24 +1390,6 @@
         </form>
     </div>
 
-<!-- Customer Service Section at the bottom -->
-<section id="customer-service" class="customer-service fade-in">
-    <h2>Customer Service</h2>
-    <ul class="customer-service-list">
-        <li><a href="javascript:void(0)" onclick="contactUs()">Contact Us</a></li>
-        <li><a href="javascript:void(0)" onclick="showPopup('Shipping & Returns', shippingReturnsContent)">Shipping & Returns</a></li>
-        <li><a href="javascript:void(0)" onclick="showPopup('Size Guide', sizeGuideContent)">Size Guide</a></li>
-        <li><a href="javascript:void(0)" onclick="showPopup('FAQ', faqContent)">FAQ</a></li>
-    </ul>
-</section>
-
-<!-- Reuse existing modal for popups -->
-<div id="customerServiceModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
-        <div id="customerServiceContent"></div>
-    </div>
-</div>
 
 
 
@@ -2035,62 +2017,6 @@
         // Initialize
         buildSearchIndex();
 
-
-// Content for popups
-const shippingReturnsContent = `
-    <p>All orders are processed within 2-3 business days. Shipping times vary by location. 
-    You can return items within 30 days of purchase. Items must be unused and in original packaging.</p>
-`;
-
-const sizeGuideContent = `
-    <p>Our clothing sizes follow international standards. Please check measurements before ordering:</p>
-    <ul>
-        <li>Small (S): Bust 34-36", Waist 26-28"</li>
-        <li>Medium (M): Bust 36-38", Waist 28-30"</li>
-        <li>Large (L): Bust 38-40", Waist 30-32"</li>
-    </ul>
-`;
-
-const faqContent = `
-    <p><strong>Q1:</strong> How long does shipping take?<br>
-    <strong>A:</strong> 2-7 business days depending on location.</p>
-    <p><strong>Q2:</strong> Can I exchange an item?<br>
-    <strong>A:</strong> Yes, exchanges are allowed within 30 days of purchase.</p>
-    <p><strong>Q3:</strong> How do I contact customer support?<br>
-    <strong>A:</strong> Use the Contact Us option to reach us via social media.</p>
-`;
-
-// Show popup in Customer Service modal
-function showPopup(title, content) {
-    document.getElementById('customerServiceContent').innerHTML = `
-        <h3>${title}</h3>
-        ${content}
-    `;
-    openModal('customerServiceModal');
-}
-
-// Contact Us – redirect to social media
-function contactUs() {
-    const socialLinks = [
-        { name: 'Instagram', url: 'https://instagram.com/YourPage' },
-        { name: 'Facebook', url: 'https://facebook.com/YourPage' },
-        { name: 'WhatsApp', url: 'https://wa.me/1234567890' }
-    ];
-
-    let choice = prompt(
-        'Choose a contact method:\n1. Instagram\n2. Facebook\n3. WhatsApp',
-        '1'
-    );
-
-    if (!choice) return;
-
-    const index = parseInt(choice) - 1;
-    if (socialLinks[index]) {
-        window.open(socialLinks[index].url, '_blank');
-    } else {
-        alert('Invalid choice!');
-    }
-}
 
 
 
