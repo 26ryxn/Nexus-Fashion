@@ -1390,15 +1390,15 @@
         </form>
     </div>
 
-    <!-- Customer Service Section -->
+<!-- Customer Service Section at the bottom -->
 <section id="customer-service" class="customer-service fade-in">
     <h2>Customer Service</h2>
-    <div class="customer-service-options">
-        <button class="btn-primary" onclick="contactUs()">Contact Us</button>
-        <button class="btn-primary" onclick="showPopup('Shipping & Returns', shippingReturnsContent)">Shipping & Returns</button>
-        <button class="btn-primary" onclick="showPopup('Size Guide', sizeGuideContent)">Size Guide</button>
-        <button class="btn-primary" onclick="showPopup('FAQ', faqContent)">FAQ</button>
-    </div>
+    <ul class="customer-service-list">
+        <li><a href="javascript:void(0)" onclick="contactUs()">Contact Us</a></li>
+        <li><a href="javascript:void(0)" onclick="showPopup('Shipping & Returns', shippingReturnsContent)">Shipping & Returns</a></li>
+        <li><a href="javascript:void(0)" onclick="showPopup('Size Guide', sizeGuideContent)">Size Guide</a></li>
+        <li><a href="javascript:void(0)" onclick="showPopup('FAQ', faqContent)">FAQ</a></li>
+    </ul>
 </section>
 
 <!-- Reuse existing modal for popups -->
@@ -1408,6 +1408,7 @@
         <div id="customerServiceContent"></div>
     </div>
 </div>
+
 
 
 
@@ -2035,15 +2036,13 @@
         buildSearchIndex();
 
 
-        // Content for popups
+// Content for popups
 const shippingReturnsContent = `
-    <h3>Shipping & Returns</h3>
     <p>All orders are processed within 2-3 business days. Shipping times vary by location. 
     You can return items within 30 days of purchase. Items must be unused and in original packaging.</p>
 `;
 
 const sizeGuideContent = `
-    <h3>Size Guide</h3>
     <p>Our clothing sizes follow international standards. Please check measurements before ordering:</p>
     <ul>
         <li>Small (S): Bust 34-36", Waist 26-28"</li>
@@ -2053,7 +2052,6 @@ const sizeGuideContent = `
 `;
 
 const faqContent = `
-    <h3>Frequently Asked Questions</h3>
     <p><strong>Q1:</strong> How long does shipping take?<br>
     <strong>A:</strong> 2-7 business days depending on location.</p>
     <p><strong>Q2:</strong> Can I exchange an item?<br>
@@ -2062,16 +2060,16 @@ const faqContent = `
     <strong>A:</strong> Use the Contact Us option to reach us via social media.</p>
 `;
 
-// Generic function to show popup inside Customer Service modal
+// Show popup in Customer Service modal
 function showPopup(title, content) {
     document.getElementById('customerServiceContent').innerHTML = `
-        <h2>${title}</h2>
+        <h3>${title}</h3>
         ${content}
     `;
     openModal('customerServiceModal');
 }
 
-// Contact Us redirect
+// Contact Us – redirect to social media
 function contactUs() {
     const socialLinks = [
         { name: 'Instagram', url: 'https://instagram.com/YourPage' },
@@ -2093,6 +2091,7 @@ function contactUs() {
         alert('Invalid choice!');
     }
 }
+
 
 
 
