@@ -1067,6 +1067,27 @@ footer a:hover {
 
 
 
+/* FAQ Accordion */
+.faq-item h3 {
+    cursor: pointer;
+    margin-bottom: 5px;
+    color: #b80000;
+    font-size: 18px;
+}
+
+.faq-item h3:hover {
+    color: #ff4d4d;
+}
+
+.faq-answer {
+    display: none;
+    color: #fff;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -1465,6 +1486,40 @@ footer a:hover {
         </form>
     </div>
 
+
+
+    <!-- FAQ MODAL -->
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('faqModal')">&times;</span>
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">How long does shipping take?</h3>
+            <p class="faq-answer">Shipping usually takes 3–7 business days depending on your location.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">Do you ship internationally?</h3>
+            <p class="faq-answer">Yes, we ship worldwide. International delivery may take 7–14 days.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">How can I return an item?</h3>
+            <p class="faq-answer">You may return items within 14 days of delivery. Items must be unused and in original packaging.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">What payment methods do you accept?</h3>
+            <p class="faq-answer">We accept Visa, Mastercard, PayPal, and Cash on Delivery (COD).</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">Are your products true to size?</h3>
+            <p class="faq-answer">Yes, our sizes follow a standard European sizing chart. Check the Size Guide for details.</p>
+        </div>
+    </div>
+</div>
 
 
 
@@ -2144,6 +2199,16 @@ function showFAQ() {
 }
 
 
+
+
+function openFaq() {
+    document.getElementById('faqModal').style.display = 'block';
+}
+
+function toggleFaq(element) {
+    const answer = element.nextElementSibling;
+    answer.style.display = answer.style.display === "block" ? "none" : "block";
+}
 
 
     </script>
