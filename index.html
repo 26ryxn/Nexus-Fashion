@@ -4,151 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexus Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Basic Reset */
-* { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
-body { overflow-x:hidden; }
-header { position:fixed; top:0; left:0; width:100%; background:white; z-index:1000; transition:0.3s; padding:1rem; display:flex; justify-content:space-between; align-items:center; }
-header.scrolled { box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-nav a { margin:0 1rem; text-decoration:none; color:black; }
-section { padding:100px 20px; }
-.product-card { border:1px solid #ddd; padding:1rem; margin:1rem; display:inline-block; width:250px; vertical-align:top; cursor:pointer; position:relative; }
-.product-card img { width:100%; height:auto; }
-.product-heart { position:absolute; top:10px; right:10px; font-size:1.5rem; color:#ccc; cursor:pointer; }
-.product-heart.favorited { color:red; }
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; overflow:auto; z-index:2000; }
-.modal.active { display:flex; }
-.modal-content { background:white; padding:2rem; border-radius:10px; max-width:800px; width:90%; position:relative; }
-.modal-content img { max-width:100%; margin-bottom:1rem; }
-.close { position:absolute; top:10px; right:10px; cursor:pointer; font-size:1.5rem; }
-.btn-primary { background:#000; color:white; border:none; padding:0.5rem 1rem; cursor:pointer; border-radius:5px; }
-.search-result-item, .favorite-item { border:1px solid #ddd; padding:1rem; margin:0.5rem 0; cursor:pointer; display:flex; align-items:center; }
-.favorite-item img { width:80px; margin-right:1rem; }
-.fade-in { opacity:0; transition:1s; }
-.fade-in.visible { opacity:1; }
-.parallax-img { width:100%; height:400px; object-fit:cover; }
+    body { font-family:'Roboto', sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    header { position:fixed; top:0; width:100%; background:#fff; padding:1rem 2rem; box-shadow:0 2px 5px rgba(0,0,0,0.1); z-index:1000; transition:.3s; }
+    header.scrolled { box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+    header h1 { margin:0; }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.5rem; margin:120px 2rem 2rem 2rem; }
+    .product-card { border:1px solid #ddd; border-radius:10px; padding:1rem; text-align:center; background:#fff; transition:transform .2s; position:relative; }
+    .product-card:hover { transform:translateY(-5px); }
+    .product-image { width:100%; height:300px; object-fit:cover; border-radius:10px; }
+    .product-heart { position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888; }
+    .product-heart.favorited { color:red; }
+    .btn-primary { margin-top:.5rem; padding:.5rem 1rem; cursor:pointer; background:black; color:white; border:none; border-radius:5px; }
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; overflow-y:auto; }
+    .modal.active { display:block; }
+    .modal-content { background:#fff; margin:5% auto; padding:1.5rem; width:90%; max-width:900px; border-radius:10px; position:relative; }
+    .modal-content img { max-width:100%; border-radius:10px; }
+    .close { position:absolute; top:1rem; right:1rem; cursor:pointer; font-size:1.5rem; }
+    .fade-in { opacity:0; transform:translateY(20px); transition:all .8s ease-in-out; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+    .no-results { text-align:center; padding:2rem; color:#666; }
+    #searchResults .search-result-item { padding:.5rem; border-bottom:1px solid #ddd; cursor:pointer; }
+    #searchResults .search-result-item:hover { background:#f0f0f0; }
 </style>
 </head>
 <body>
 
 <header id="header">
-<h1>Nexus Fashion</h1>
-<nav>
-<a href="#new-arrivals">New Arrivals</a>
-<a href="#collections">Collections</a>
-<a href="#dresses">Dresses</a>
-<a href="#accessories">Accessories</a>
-<a href="#sale">Sale</a>
-<button id="favorites-btn" onclick="openModal('favoritesModal')">Favorites (<span id="favorites-count">0</span>)</button>
-<button onclick="openModal('searchModal')">Search</button>
-</nav>
+    <h1>Nexus Fashion</h1>
 </header>
 
-<section id="parallax" style="position:relative; height:400px; overflow:hidden;">
-<img id="parallax-img" class="parallax-img" src="https://images.unsplash.com/photo-1600180758895-10a1be9e75a8?crop=entropy&cs=tinysrgb&fit=max&w=1080" alt="Fashion Parallax">
-</section>
-
-<section id="new-arrivals" class="fade-in">
-<h2>New Arrivals</h2>
-<div id="productsGrid"></div>
-</section>
-
-<section id="collections" class="fade-in">
-<h2>Featured Collections</h2>
-</section>
-
-<section id="dresses" class="fade-in">
-<h2>Signature Dresses</h2>
-</section>
-
-<section id="accessories" class="fade-in">
-<h2>Luxury Accessories</h2>
-</section>
-
-<section id="sale" class="fade-in">
-<h2>Exclusive Sale</h2>
+<section id="products" class="fade-in">
+    <h2 style="text-align:center; margin-bottom:1rem;">Our Products</h2>
+    <div id="productGrid" class="product-grid"></div>
 </section>
 
 <!-- Modals -->
 <div id="productModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('productModal')">&times;</span>
-<div id="productDetailsContent"></div>
-</div>
+    <div class="modal-content" id="productDetailsContent">
+        <span class="close" onclick="closeModal('productModal')">&times;</span>
+    </div>
 </div>
 
 <div id="favoritesModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('favoritesModal')">&times;</span>
-<div id="favoritesGrid"></div>
-</div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('favoritesModal')">&times;</span>
+        <h3>Favorites</h3>
+        <div id="favoritesGrid"></div>
+    </div>
 </div>
 
 <div id="searchModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('searchModal')">&times;</span>
-<input type="text" id="searchInput" placeholder="Search..." style="width:100%; padding:0.5rem; margin-bottom:1rem;">
-<div id="searchResults"></div>
-</div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('searchModal')">&times;</span>
+        <h3>Search Results</h3>
+        <input type="text" id="searchInput" placeholder="Search products..." style="width:100%;padding:.5rem;margin-bottom:1rem;">
+        <div id="searchResults"></div>
+    </div>
 </div>
 
 <div id="customerServiceModal" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
-<div id="customerServiceContent"></div>
-</div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
+        <div id="customerServiceContent"></div>
+    </div>
 </div>
 
 <script>
-// Products database (full 16 products included)
+// ------------------ Product Data ------------------
 const products = [
-  {id:0,name:"Elegant Black Dress",price:"$1,299",image:"https://images.unsplash.com/photo-1611484907270-d1e8d10e0f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Elegant black dress description.", specs:{Material:"100% Italian Silk",Fit:"Slim",Length:"Midi",Care:"Dry clean only",Designer:"Nexus Exclusive",MadeIn:"Italy"}},
-  {id:1,name:"Luxury Evening Gown",price:"$2,499",image:"https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Evening Wear",description:"Luxury evening gown description.", specs:{Material:"Silk Chiffon",Fit:"A-line",Length:"Floor-length",Care:"Professional cleaning",Designer:"Nexus Haute Couture",MadeIn:"Paris"}},
-  {id:2,name:"Sexy Red Dress",price:"$899",image:"https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Sexy red dress description.", specs:{Material:"Stretch Velvet",Fit:"Bodycon",Length:"Knee-length",Care:"Hand wash cold",Designer:"Nexus Seduction Line",MadeIn:"Milan"}},
-  {id:3,name:"Designer Collection",price:"$1,599",image:"https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Collections",description:"Designer collection description.", specs:{Material:"Silk & Leather",Fit:"Structured",Edition:"Limited 50 pieces",Care:"Specialist care",Designer:"Nexus X Designer",MadeIn:"New York"}},
-  {id:4,name:"Leather Jacket",price:"$799",image:"https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Outerwear",description:"Leather jacket description.", specs:{Material:"Lambskin Leather",Fit:"Tailored",Features:"Asymmetric zip",Care:"Professional leather cleaning",Designer:"Nexus Essentials",MadeIn:"Spain"}},
-  {id:5,name:"Glamour Collection",price:"$1,199",image:"https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Collections",description:"Glamour collection description.", specs:{Material:"Satin & Lace",Fit:"Classic",Style:"Vintage-modern",Care:"Dry clean",Designer:"Nexus Glamour",MadeIn:"Los Angeles"}},
-  {id:6,name:"Signature Dress",price:"$2,299",image:"https://images.unsplash.com/photo-1677059794444-e39a4cf11fdd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Signature dress description.", specs:{Material:"Silk Crepe",Fit:"Custom-tailored",Features:"Signature detailing",Care:"White glove cleaning",Designer:"Nexus Founder's Collection",MadeIn:"Paris"}},
-  {id:7,name:"Black Ensemble",price:"$1,899",image:"https://images.unsplash.com/photo-1750032439477-443d414ac4d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Ensembles",description:"Black ensemble description.", specs:{Material:"Wool & Silk",Fit:"Tailored",Pieces:"Blazer + Bottom",Care:"Dry clean",Designer:"Nexus Power",MadeIn:"London"}},
-  {id:8,name:"Red Passion Dress",price:"$1,599",image:"https://images.unsplash.com/flagged/photo-1564485377544-ce65ce5187df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Red Passion dress description.", specs:{Material:"Silk Charmeuse",Fit:"Flowing",Length:"Floor-length",Care:"Dry clean",Designer:"Nexus Passion",MadeIn:"Rome"}},
-  {id:9,name:"Designer Heels",price:"$699",image:"https://images.unsplash.com/photo-1551977021-af54e6399e55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Designer heels description.", specs:{Material:"Italian Leather",HeelHeight:"10cm",Features:"Cushioned",Care:"Professional care",Designer:"Nexus Footwear",MadeIn:"Florence"}},
-  {id:10,name:"Fashion Sunglasses",price:"$399",image:"https://images.unsplash.com/photo-1569563359268-b9a106a7b8a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Fashion sunglasses description.", specs:{Material:"Acetate & Metal",Lens:"Polarized",Style:"Oversized",Includes:"Case & cloth",Designer:"Nexus Eyewear",MadeIn:"Japan"}},
-  {id:11,name:"Luxury Jewelry",price:"$1,499",image:"https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Luxury jewelry description.", specs:{Material:"18K Gold",Craftsmanship:"Hand-made",Certificate:"Included",Care:"Professional cleaning",Designer:"Nexus Jewelry",MadeIn:"Switzerland"}},
-  {id:12,name:"Statement Pieces",price:"$899",image:"https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Statement pieces description.", specs:{Material:"Mixed metals",Style:"Sculptural",Weight:"Lightweight",Care:"Wipe clean",Designer:"Nexus Statement",MadeIn:"Spain"}},
-  {id:13,name:"Leather Collection",price:"$559",originalPrice:"$799",image:"https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"Leather collection sale description.", specs:{Material:"Leather",Fit:"True to size",Sale:"30% off",Care:"Leather conditioner",Designer:"Nexus Leather",MadeIn:"Argentina"}},
-  {id:14,name:"Evening Collection",price:"$719",originalPrice:"$1,199",image:"https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"Evening collection sale description.", specs:{Material:"Silk",Fit:"Elegant",Sale:"40% off",Care:"Dry clean",Designer:"Nexus Evening",MadeIn:"Milan"}},
-  {id:15,name:"Red Passion",price:"$674",originalPrice:"$899",image:"https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"Red Passion sale description.", specs:{Material:"Jersey",Fit:"Body-contouring",Sale:"25% off",Care:"Machine wash",Designer:"Nexus Red",MadeIn:"Portugal"}}
+  {id:0,name:"Elegant Black Dress",price:"$1,299",image:"https://images.unsplash.com/photo-1611484907270-d1e8d10e0f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"This stunning elegant black dress embodies sophistication and timeless beauty."},
+  {id:1,name:"Luxury Evening Gown",price:"$2,499",image:"https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Evening Wear",description:"A breathtaking luxury evening gown that epitomizes haute couture."},
+  {id:2,name:"Sexy Red Dress",price:"$899",image:"https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Turn heads with this daring sexy red dress."},
+  {id:3,name:"Designer Collection",price:"$1,599",image:"https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Collections",description:"An exclusive piece from our limited designer collection."},
+  {id:4,name:"Leather Jacket",price:"$799",image:"https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Outerwear",description:"A timeless leather jacket that effortlessly combines edge with elegance."},
+  {id:5,name:"Glamour Collection",price:"$1,199",image:"https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Collections",description:"From our Glamour Collection, this piece captures the essence of Hollywood's golden age."},
+  {id:6,name:"Signature Dress",price:"$2,299",image:"https://images.unsplash.com/photo-1677059794444-e39a4cf11fdd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"Our signature dress represents everything Nexus Fashion stands for."},
+  {id:7,name:"Black Ensemble",price:"$1,899",image:"https://images.unsplash.com/photo-1750032439477-443d414ac4d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Ensembles",description:"A sophisticated black ensemble that proves monochromatic dressing can be powerful."},
+  {id:8,name:"Red Passion Dress",price:"$1,599",image:"https://images.unsplash.com/flagged/photo-1564485377544-ce65ce5187df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Dresses",description:"The Red Passion Dress is designed for the woman who isn't afraid to make an entrance."},
+  {id:9,name:"Designer Heels",price:"$699",image:"https://images.unsplash.com/photo-1551977021-af54e6399e55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Elevate any outfit with these stunning designer heels."},
+  {id:10,name:"Fashion Sunglasses",price:"$399",image:"https://images.unsplash.com/photo-1569563359268-b9a106a7b8a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Make a statement with these oversized fashion sunglasses."},
+  {id:11,name:"Luxury Jewelry",price:"$1,499",image:"https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"An exquisite jewelry piece that serves as the perfect finishing touch."},
+  {id:12,name:"Statement Pieces",price:"$899",image:"https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Accessories",description:"Bold statement pieces designed to transform any outfit."},
+  {id:13,name:"Leather Collection",price:"$559",image:"https://images.unsplash.com/photo-1636730788204-9506e5ede999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"An incredible opportunity to own a piece from our luxury leather collection."},
+  {id:14,name:"Evening Collection",price:"$719",image:"https://images.unsplash.com/photo-1581713845245-ca131fdb3064?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"A stunning evening piece now available at an exceptional discount."},
+  {id:15,name:"Red Passion",price:"$674",image:"https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",category:"Sale",description:"The passionate red dress you've been dreaming of, now 25% off."}
 ];
 
-// Favorites array
+// ------------------ Favorites ------------------
 let favorites = [];
 
-function updateFavoritesCount(){document.getElementById('favorites-count').textContent=favorites.length;}
+function toggleFavorite(id,event){
+    event.stopPropagation();
+    const idx = favorites.indexOf(id);
+    if(idx>-1) favorites.splice(idx,1); else favorites.push(id);
+    displayProducts();
+    displayFavorites();
+}
 
-function toggleFavorite(id,e){e.stopPropagation();const heart=e.currentTarget;const index=favorites.indexOf(id);if(index>-1){favorites.splice(index,1);heart.classList.remove('favorited');}else{favorites.push(id);heart.classList.add('favorited');}updateFavoritesCount();}
+function displayFavorites(){
+    const grid = document.getElementById('favoritesGrid');
+    if(favorites.length===0){ grid.innerHTML='<p class="no-results">No favorites yet.</p>'; return; }
+    grid.innerHTML=favorites.map(id=>{
+        const p = products.find(pr=>pr.id===id);
+        return `<div style="margin-bottom:1rem;">
+            <img src="${p.image}" alt="${p.name}" style="width:100%; border-radius:10px;">
+            <h4>${p.name}</h4><p>${p.price}</p>
+            <button class="btn-primary" onclick="showProductDetails(${p.id})">View Details</button>
+        </div>`;
+    }).join('');
+}
 
-function showProductDetails(id){const p=products[id];const isFav=favorites.includes(id);const content=document.getElementById('productDetailsContent');content.innerHTML=`<img src="${p.image}" alt="${p.name}"><div><h3>${p.name}</h3><p>${p.price}${p.originalPrice?` <s>${p.originalPrice}</s>`:''}</p><p>${p.description}</p><ul>${Object.entries(p.specs).map(([k,v])=>`<li><strong>${k}:</strong> ${v}</li>`).join('')}</ul><button class="btn-primary" onclick="toggleFavoriteFromModal(${id},this)">${isFav?'♥ FAVORITED':'♥ ADD TO FAVORITES'}</button></div>`;openModal('productModal');}
+// ------------------ Product Cards ------------------
+function displayProducts(){
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML=products.map(p=>`
+        <div class="product-card fade-in" data-product="${p.id}">
+            <img src="${p.image}" alt="${p.name}" class="product-image">
+            <button class="product-heart ${favorites.includes(p.id)?'favorited':''}" onclick="toggleFavorite(${p.id}, event)">♥</button>
+            <h4>${p.name}</h4>
+            <p>${p.price}</p>
+            <button class="btn-primary" onclick="showProductDetails(${p.id})">View Details</button>
+        </div>
+    `).join('');
+}
 
-function toggleFavoriteFromModal(id,btn){const idx=favorites.indexOf(id);if(idx>-1){favorites.splice(idx,1);btn.textContent='♥ ADD TO FAVORITES';}else{favorites.push(id);btn.textContent='♥ FAVORITED';}updateFavoritesCount();}
+// ------------------ Product Modal ------------------
+function showProductDetails(id){
+    const p = products.find(pr=>pr.id===id);
+    const content = document.getElementById('productDetailsContent');
+    content.innerHTML=`
+        <span class="close" onclick="closeModal('productModal')">&times;</span>
+        <img src="${p.image}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>${p.price}</p>
+        <p>${p.description}</p>
+        <button class="btn-primary" onclick="toggleFavorite(${p.id}, event)">${favorites.includes(p.id)?'Remove from Favorites':'Add to Favorites'}</button>
+    `;
+    openModal('productModal');
+}
 
-function displayProducts(){const grid=document.getElementById('productsGrid');grid.innerHTML=products.map(p=>`<div class="product-card" data-product="${p.id}" onclick="showProductDetails(${p.id})"><img src="${p.image}" alt="${p.name}"><div class="product-heart" onclick="toggleFavorite(${p.id},event)">♥</div><h4>${p.name}</h4><p>${p.price}</p></div>`).join('');}
+// ------------------ Modals ------------------
+function openModal(id){document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('active'); document.body.style.overflow='auto';}
+
+// ------------------ Scroll Effects ------------------
+const observer = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');})},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+window.addEventListener('scroll',()=>{const h=document.getElementById('header');window.scrollY>50?h.classList.add('scrolled'):h.classList.remove('scrolled');});
+
+// ------------------ Search ------------------
+let searchIndex = products.map(p=>({type:'product',title:p.name,content:p.name+' '+p.category+' '+p.description,data:p}));
+document.getElementById('searchInput')?.addEventListener('input',e=>{
+    const query = e.target.value.toLowerCase();
+    const results = searchIndex.filter(item=>item.content.toLowerCase().includes(query));
+    const container = document.getElementById('searchResults');
+    if(results.length===0){ container.innerHTML='<p class="no-results">No results found.</p>'; return; }
+    container.innerHTML=results.map(r=>`<div class="search-result-item" onclick="showProductDetails(${r.data.id});closeModal('searchModal');">${r.data.name} - ${r.data.category}</div>`).join('');
+});
 
 displayProducts();
-
-function openModal(id){document.getElementById(id).classList.add('active');document.body.style.overflow='hidden';}
-function closeModal(id){document.getElementById(id).classList.remove('active');document.body.style.overflow='auto';}
-
-// Scroll effects
-window.addEventListener('scroll',()=>{const h=document.getElementById('header');if(window.scrollY>50){h.classList.add('scrolled');}else{h.classList.remove('scrolled');}});
-const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}}),{threshold:0.1});document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
-
-// Search
-let searchIndex=[];products.forEach(p=>searchIndex.push({type:'product',title:p.name,content:`${p.name} ${p.category} ${p.description} ${p.price}`,data:p}));
-document.getElementById('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();const results=searchIndex.filter(i=>i.content.toLowerCase().includes(q));const container=document.getElementById('searchResults');if(results.length===0){container.innerHTML='No results found';return;}container.innerHTML=results.map(r=>`<div class="search-result-item" onclick="showProductDetails(${r.data.id});closeModal('searchModal');"><h4>${r.data.name}</h4><p>${r.data.category} - ${r.data.price}</p></div>`).join('');});
-
+displayFavorites();
 </script>
+
 </body>
 </html>
