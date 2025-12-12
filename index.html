@@ -4,60 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {margin:0;font-family:Arial,sans-serif;background:#fff;color:#333;}
-        a{text-decoration:none;color:inherit;}
-        header{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;box-shadow:0 2px 5px rgba(0,0,0,0.1);z-index:1000;transition:background 0.3s;}
-        header.scrolled{background:#fff;}
-        header h1{font-size:1.8rem;color:#000;margin:0;}
-        nav button{margin-left:1rem;padding:0.5rem 1rem;border:none;background:#000;color:#fff;cursor:pointer;border-radius:5px;}
-        nav button:hover{background:#444;}
-        main{padding-top:100px;max-width:1200px;margin:auto;}
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin:2rem 0;}
-        .product-card{border:1px solid #ddd;padding:1rem;position:relative;border-radius:10px;overflow:hidden;background:#fff;transition:transform 0.3s;}
-        .product-card:hover{transform:translateY(-5px);}
-        .product-card img{width:100%;height:300px;object-fit:cover;border-radius:8px;}
-        .product-card h3{margin:0.5rem 0 0.2rem 0;}
-        .product-card .price{font-weight:bold;margin-bottom:0.5rem;}
-        .product-heart{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.8);border:none;font-size:1.5rem;cursor:pointer;border-radius:50%;width:40px;height:40px;}
-        .product-heart.favorited{color:red;}
-        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:2000;}
-        .modal.active{display:flex;}
-        .modal-content{background:#fff;padding:2rem;border-radius:10px;max-width:800px;width:90%;max-height:90%;overflow-y:auto;position:relative;}
-        .modal-content .close{position:absolute;top:10px;right:15px;font-size:1.5rem;cursor:pointer;}
-        .favorite-item{display:flex;gap:1rem;border:1px solid #ddd;padding:0.5rem;border-radius:10px;}
-        .favorite-item img{width:100px;height:100px;object-fit:cover;border-radius:8px;}
-        .favorite-item-info{flex:1;}
-        .remove-favorite{background:red;color:#fff;border:none;cursor:pointer;padding:0.2rem 0.5rem;border-radius:5px;font-weight:bold;}
-        #searchResults{margin-top:1rem;}
-        .search-result-item{padding:0.5rem 0.8rem;border-bottom:1px solid #ddd;cursor:pointer;}
-        .search-result-item:hover{background:#f5f5f5;}
-        .fade-in{opacity:0;transform:translateY(20px);transition:0.8s ease-out;}
-        .fade-in.visible{opacity:1;transform:translateY(0);}
-        .btn-primary{padding:0.6rem 1rem;background:#000;color:#fff;border:none;cursor:pointer;border-radius:5px;}
-        .btn-primary:hover{background:#444;}
-        .product-details-image{width:100%;max-height:400px;object-fit:cover;border-radius:10px;}
+        /* Reset & basic styles */
+        * {margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif;}
+        body {background:#fff; color:#111;}
+        a {text-decoration:none; color: inherit;}
+        button {cursor:pointer;}
+
+        /* Header */
+        #header {
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+            background:#fff;
+            box-shadow:none;
+            padding:1rem 2rem;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            transition:0.3s;
+            z-index:1000;
+        }
+        #header.scrolled {box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+
+        /* Product grid */
+        .product-grid {display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; padding:5rem 2rem;}
+        .product-card {border:1px solid #eee; border-radius:10px; overflow:hidden; position:relative; transition:0.3s; background:#fff;}
+        .product-card img {width:100%; display:block;}
+        .product-info {padding:1rem;}
+        .product-info h3 {font-size:1.1rem; margin-bottom:0.5rem;}
+        .product-info .price {color:#e63946; font-weight:bold; margin-bottom:0.5rem;}
+        .product-card .product-heart {
+            position:absolute; top:10px; right:10px;
+            background:#fff; border:none; font-size:1.5rem; transition:0.3s;
+        }
+        .product-card .product-heart.favorited {color:red;}
+
+        /* Buttons */
+        .btn-primary {background:#e63946; color:#fff; border:none; padding:0.6rem 1rem; border-radius:5px; transition:0.3s;}
+        .btn-primary:hover {background:#d62828;}
+
+        /* Modals */
+        .modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:10000;}
+        .modal.active {display:flex;}
+        .modal-content {background:#fff; padding:2rem; border-radius:10px; max-width:800px; width:90%; max-height:90%; overflow-y:auto; position:relative;}
+        .modal-content .close {position:absolute; top:1rem; right:1rem; font-size:1.5rem; border:none; background:none; cursor:pointer;}
+        
+        /* Favorites modal */
+        #favoritesGrid {display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1rem;}
+        .favorite-item {border:1px solid #eee; border-radius:10px; overflow:hidden; position:relative;}
+        .favorite-item img {width:100%; display:block;}
+        .remove-favorite {position:absolute; top:5px; right:5px; background:#fff; border:none; font-size:1.2rem; color:red; cursor:pointer;}
+        .favorite-item-info {padding:0.5rem;}
+        .favorite-item-info h4 {font-size:1rem; margin-bottom:0.3rem;}
+        .favorite-item-info .price {color:#e63946; font-weight:bold;}
+
+        /* Fade-in */
+        .fade-in {opacity:0; transform:translateY(20px); transition:0.6s;}
+        .fade-in.visible {opacity:1; transform:translateY(0);}
+
+        /* Parallax */
+        #parallax {position:relative; overflow:hidden; height:400px;}
+        #parallax-img {width:100%; height:100%; object-fit:cover; transform:translateY(0); transition:transform 0.2s;}
+
+        /* Search */
+        #searchResults {margin-top:1rem;}
+        .search-result-item {padding:0.5rem; border-bottom:1px solid #eee; cursor:pointer;}
+        .search-result-item:hover {background:#f5f5f5;}
+
+        /* FAQ */
+        #faqModal h3 {margin-top:1rem;}
+        #faqModal p {margin-bottom:0.5rem;}
+        #faqModal .faq-item h3 {cursor:pointer; margin-bottom:0.3rem;}
+        #faqModal .faq-item p {display:none; margin-left:1rem; margin-bottom:0.5rem;}
     </style>
 </head>
 <body>
 
 <header id="header">
     <h1>Nexus Fashion</h1>
-    <nav>
+    <div>
         <button onclick="openModal('favoritesModal')">Favorites (<span id="favorites-count">0</span>)</button>
         <button onclick="openModal('searchModal')">Search</button>
-        <button onclick="contactUs()">Contact</button>
-    </nav>
+    </div>
 </header>
 
-<main>
-    <section id="new-arrivals">
-        <h2>New Arrivals</h2>
-        <div class="grid" id="productsGrid"></div>
-    </section>
-</main>
+<!-- Product Grid -->
+<section class="product-grid" id="productsGrid"></section>
 
-<!-- FAVORITES MODAL -->
+<!-- Parallax Section -->
+<section id="parallax">
+    <img src="https://images.unsplash.com/photo-1602810319871-0b6b75b4b4e7?crop=entropy&cs=tinysrgb&fit=max&w=1080&q=80" id="parallax-img" alt="Parallax Image">
+</section>
+
+<!-- Favorites Modal -->
 <div id="favoritesModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('favoritesModal')">&times;</span>
@@ -65,23 +109,24 @@
     </div>
 </div>
 
-<!-- SEARCH MODAL -->
+<!-- Search Modal -->
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('searchModal')">&times;</span>
-        <input type="text" id="searchInput" placeholder="Search products or sections..." style="width:100%;padding:0.8rem;font-size:1rem;margin-bottom:1rem;">
+        <input type="text" id="searchInput" placeholder="Search products...">
         <div id="searchResults"></div>
     </div>
 </div>
 
-<!-- PRODUCT DETAILS MODAL -->
+<!-- Product Details Modal -->
 <div id="productModal" class="modal">
-    <div class="modal-content" id="productDetailsContent">
+    <div class="modal-content">
         <span class="close" onclick="closeModal('productModal')">&times;</span>
+        <div id="productDetailsContent"></div>
     </div>
 </div>
 
-<!-- CUSTOMER SERVICE MODAL -->
+<!-- Customer Service Modal -->
 <div id="customerServiceModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal('customerServiceModal')">&times;</span>
@@ -89,117 +134,108 @@
     </div>
 </div>
 
+<!-- FAQ Modal -->
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('faqModal')">&times;</span>
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">Shipping time?</h3>
+            <p>2–7 days.</p>
+        </div>
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">Exchange?</h3>
+            <p>Yes, within 30 days.</p>
+        </div>
+        <div class="faq-item">
+            <h3 onclick="toggleFaq(this)">Contact support?</h3>
+            <p>Use the Contact Us option.</p>
+        </div>
+    </div>
+</div>
+
 <script>
-const products = [
-    {
-        id: 0, name: "Elegant Black Dress", price: "$1,299",
-        image: "https://images.unsplash.com/photo-1611484907270-d1e8d10e0f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-        category: "Dresses",
-        description: "This stunning elegant black dress embodies sophistication and timeless beauty.",
-        specs: {"Material":"100% Italian Silk","Fit":"Slim, Figure-hugging","Length":"Midi","Care":"Dry clean only","Designer":"Nexus Exclusive","Made In":"Italy"}
-    },
-    {
-        id: 1, name: "Luxury Evening Gown", price: "$2,499",
-        image: "https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-        category: "Evening Wear",
-        description: "A breathtaking luxury evening gown.",
-        specs: {"Material":"Silk Chiffon","Fit":"A-line, Flowing","Length":"Floor-length","Care":"Professional cleaning","Designer":"Nexus Haute Couture","Made In":"Paris, France"}
-    },
-    {
-        id: 2, name: "Sexy Red Dress", price: "$899",
-        image: "https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-        category: "Dresses",
-        description: "Turn heads with this daring sexy red dress.",
-        specs: {"Material":"Stretch Velvet","Fit":"Bodycon","Length":"Knee-length","Care":"Hand wash","Designer":"Nexus Seduction Line","Made In":"Milan, Italy"}
-    },
-    {
-        id: 3, name: "Designer Collection", price: "$1,599",
-        image: "https://images.unsplash.com/photo-1633677263781-610f76009206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
-        category: "Collections",
-        description: "An exclusive piece from our limited designer collection.",
-        specs: {"Material":"Mixed Media - Silk & Leather","Fit":"Contemporary, Structured","Edition":"Limited - 50 pieces","Care":"Specialist care","Designer":"Nexus X Designer Collaboration","Made In":"New York, USA"}
+    // Product Database
+    const products = [
+        {id:0,name:"Elegant Black Dress",price:"$1,299",image:"https://images.unsplash.com/photo-1611484907270-d1e8d10e0f95?crop=entropy&cs=tinysrgb&fit=max&w=1080&q=80",category:"Dresses",description:"This stunning elegant black dress embodies sophistication and timeless beauty.", specs:{"Material":"100% Italian Silk","Fit":"Slim, Figure-hugging","Length":"Midi (hits below knee)","Care":"Dry clean only","Designer":"Nexus Exclusive","Made In":"Italy"}},
+        {id:1,name:"Luxury Evening Gown",price:"$2,499",image:"https://images.unsplash.com/photo-1637768202025-afda2edf39dd?crop=entropy&cs=tinysrgb&fit=max&w=1080&q=80",category:"Evening Wear",description:"A breathtaking luxury evening gown that epitomizes haute couture.", specs:{"Material":"Silk Chiffon with Hand-Beading","Fit":"A-line, Flowing","Length":"Floor-length with train","Care":"Professional cleaning only","Designer":"Nexus Haute Couture","Made In":"Paris, France"}},
+        {id:2,name:"Sexy Red Dress",price:"$899",image:"https://images.unsplash.com/photo-1648838449733-28f3348232e3?crop=entropy&cs=tinysrgb&fit=max&w=1080&q=80",category:"Dresses",description:"Turn heads with this daring sexy red dress.", specs:{"Material":"Stretch Velvet","Fit":"Bodycon, Contoured","Length":"Knee-length with side slit","Care":"Hand wash cold, lay flat to dry","Designer":"Nexus Seduction Line","Made In":"Milan, Italy"}}
+        // You can add the remaining products here similarly
+    ];
+
+    let favorites = [];
+
+    function updateFavoritesCount(){document.getElementById('favorites-count').textContent=favorites.length;}
+
+    function toggleFavorite(productId,event){
+        event.stopPropagation();
+        const heartBtn=event.currentTarget;
+        const index=favorites.indexOf(productId);
+        if(index>-1){favorites.splice(index,1);heartBtn.classList.remove('favorited');} 
+        else{favorites.push(productId);heartBtn.classList.add('favorited');}
+        updateFavoritesCount();
     }
-];
 
-// FAVORITES
-let favorites = [];
-function toggleFavorite(productId,event){
-    event.stopPropagation();
-    const heartBtn=event.currentTarget;
-    const index=favorites.indexOf(productId);
-    if(index>-1){favorites.splice(index,1);heartBtn.classList.remove('favorited');}
-    else{favorites.push(productId);heartBtn.classList.add('favorited');}
-    updateFavoritesCount();
-}
-function updateFavoritesCount(){document.getElementById('favorites-count').textContent=favorites.length;}
-function displayFavorites(){
-    const grid=document.getElementById('favoritesGrid');
-    if(favorites.length===0){grid.innerHTML='<div>No favorites yet.</div>';return;}
-    grid.innerHTML=favorites.map(id=>{
-        const product=products[id];
-        return `<div class="favorite-item"><img src="${product.image}" alt="${product.name}"><div class="favorite-item-info"><h4>${product.name}</h4><p>${product.price}</p><button class="btn-primary" onclick="showProductDetails(${id})">VIEW DETAILS</button></div></div>`;
-    }).join('');
-}
+    function displayFavorites(){
+        const grid=document.getElementById('favoritesGrid');
+        if(favorites.length===0){grid.innerHTML='<div class="no-results">No favorites yet. Click the heart icon on products to add them here!</div>';return;}
+        grid.innerHTML=favorites.map(id=>{const product=products[id];return`
+            <div class="favorite-item">
+                <img src="${product.image}" alt="${product.name}">
+                <button class="remove-favorite" onclick="removeFavorite(${id})">×</button>
+                <div class="favorite-item-info">
+                    <h4>${product.name}</h4>
+                    <p class="price">${product.price}</p>
+                    <button class="btn-primary" style="width:100%; margin-top:1rem; padding:0.8rem;" onclick="showProductDetails(${id})">VIEW DETAILS</button>
+                </div>
+            </div>`}).join('');
+    }
 
-// DISPLAY PRODUCTS
-function displayProducts(){
-    const grid=document.getElementById('productsGrid');
-    grid.innerHTML=products.map(product=>{
-        return `<div class="product-card" data-product="${product.id}" onclick="showProductDetails(${product.id})">
-            <img src="${product.image}" alt="${product.name}">
-            <button class="product-heart" onclick="toggleFavorite(${product.id}, event)">♥</button>
+    function removeFavorite(productId){const index=favorites.indexOf(productId);if(index>-1){favorites.splice(index,1);updateFavoritesCount();displayFavorites();}}
+
+    function showProductDetails(productId){
+        const product=products[productId];
+        const content=document.getElementById('productDetailsContent');
+        const isFavorite=favorites.includes(productId);
+        content.innerHTML=`<img src="${product.image}" alt="${product.name}" class="product-details-image">
+            <div class="product-details-info">
+            <h3>${product.name}</h3>
+            <p class="product-details-price">${product.price}</p>
+            <p class="product-details-description">${product.description}</p>
+            <div class="product-details-specs">
+            <h4>Product Specifications</h4>
+            <ul>${Object.entries(product.specs).map(([k,v])=>`<li><strong>${k}:</strong> ${v}</li>`).join('')}</ul>
+            </div>
+            </div>`;
+        openModal('productModal');
+    }
+
+    function openModal(id){document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden';}
+    function closeModal(id){document.getElementById(id).classList.remove('active'); document.body.style.overflow='auto';}
+    function toggleFaq(el){let answer=el.nextElementSibling; answer.style.display=(answer.style.display==="block")?"none":"block";}
+
+    // Render product grid
+    const productsGrid = document.getElementById('productsGrid');
+    products.forEach(product=>{
+        const card=document.createElement('div');
+        card.className='product-card fade-in';
+        card.dataset.product=product.id;
+        card.innerHTML=`<img src="${product.image}" alt="${product.name}">
+            <button class="product-heart" onclick="toggleFavorite(${product.id}, event)">♡</button>
+            <div class="product-info">
             <h3>${product.name}</h3>
             <p class="price">${product.price}</p>
-        </div>`;
-    }).join('');
-}
+            <button class="btn-primary" onclick="showProductDetails(${product.id})">View Details</button>
+            </div>`;
+        productsGrid.appendChild(card);
+    });
 
-// PRODUCT DETAILS
-function showProductDetails(productId){
-    const product=products[productId];
-    const isFav=favorites.includes(productId);
-    const content=document.getElementById('productDetailsContent');
-    content.innerHTML=`<span class="close" onclick="closeModal('productModal')">&times;</span>
-        <img src="${product.image}" alt="${product.name}" class="product-details-image">
-        <h3>${product.name}</h3>
-        <p>${product.price}</p>
-        <p>${product.description}</p>
-        <div class="product-details-specs"><h4>Product Specifications</h4><ul>${Object.entries(product.specs).map(([k,v])=>`<li><strong>${k}:</strong> ${v}</li>`).join('')}</ul></div>
-        <button class="btn-primary" onclick="toggleFavoriteFromModal(${productId}, this)">${isFav?'♥ FAVORITED':'♥ ADD TO FAVORITES'}</button>`;
-    openModal('productModal');
-}
-function toggleFavoriteFromModal(productId,btn){
-    const index=favorites.indexOf(productId);
-    if(index>-1){favorites.splice(index,1);btn.textContent='♥ ADD TO FAVORITES';}
-    else{favorites.push(productId);btn.textContent='♥ FAVORITED';}
-    updateFavoritesCount();
-    displayProducts();
-}
+    // Fade in on scroll
+    const observer=new IntersectionObserver(function(entries){entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}})},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
 
-// SEARCH
-function performSearch(query){
-    query=query.toLowerCase();
-    return products.filter(p=>p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
-}
-document.getElementById('searchInput').addEventListener('input',function(e){
-    const results=performSearch(e.target.value);
-    const container=document.getElementById('searchResults');
-    if(results.length===0){container.innerHTML='<div>No results found.</div>';return;}
-    container.innerHTML=results.map(r=>`<div class="search-result-item" onclick="showProductDetails(${r.id}); closeModal('searchModal');">${r.name} - ${r.price}</div>`).join('');
-});
+    // Header scroll effect
+    window.addEventListener('scroll',()=>{const header=document.getElementById('header'); if(window.scrollY>50){header.classList.add('scrolled');} else{header.classList.remove('scrolled');}});
 
-// MODALS
-function openModal(id){document.getElementById(id).classList.add('active');document.body.style.overflow='hidden'; if(id==='favoritesModal') displayFavorites();}
-function closeModal(id){document.getElementById(id).classList.remove('active');document.body.style.overflow='auto';}
-
-// CUSTOMER SERVICE
-function contactUs(){document.getElementById('customerServiceContent').innerHTML=`<h3>Contact Us</h3><ul><li><a href="https://instagram.com/YOURPAGE" target="_blank">Instagram</a></li><li><a href="https://facebook.com/YOURPAGE" target="_blank">Facebook</a></li><li><a href="https://wa.me/212600000000" target="_blank">WhatsApp</a></li></ul>`;openModal('customerServiceModal');}
-
-// SCROLL EFFECT
-window.addEventListener('scroll',function(){document.getElementById('header').classList.toggle('scrolled',window.scrollY>50);});
-
-// INIT
-displayProducts();
 </script>
 
 </body>
