@@ -2252,6 +2252,46 @@ function toggleFaq(element) {
 }
 
 
+            openModal('productDetailsModal');
+        }
+
+        function toggleFavoriteFromModal(productId, btn) {
+            const index = favorites.indexOf(productId);
+
+            if (index > -1) {
+                favorites.splice(index, 1);
+                btn.classList.remove("active");
+                btn.textContent = "♥ ADD TO FAVORITES";
+            } else {
+                favorites.push(productId);
+                btn.classList.add("active");
+                btn.textContent = "♥ FAVORITED";
+            }
+
+            updateFavoritesCount();
+        }
+
+        // MODAL FUNCTIONS
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add("active");
+            document.body.style.overflow = "hidden"; // Prevent background scroll
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll(".modal").forEach(modal => {
+            modal.addEventListener("click", (e) => {
+                if (e.target.classList.contains("modal")) {
+                    modal.classList.remove("active");
+                    document.body.style.overflow = "auto";
+                }
+            });
+        });
+
 
     </script>
 
