@@ -1986,16 +1986,7 @@ footer a:hover {
             }
             
             updateFavoritesCount();
-            
-            // Update heart button on product card
-            const productCard = document.querySelector(`[data-product="${productId}"] .product-heart`);
-            if (productCard) {
-                if (index > -1) {
-                    productCard.classList.remove('favorited');
-                } else {
-                    productCard.classList.add('favorited');
-                }
-            }
+
         }
 
         // Search Functionality
