@@ -1087,6 +1087,39 @@ footer a:hover {
 }
 
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    position: relative;
+    background: #111;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white !important;
+    z-index: 10000;
+}
+
+
 
     </style>
 </head>
@@ -1552,7 +1585,8 @@ footer a:hover {
         <li><a href="#" onclick="contactUs(); return false;">Contact Us</a></li>
         <li><a href="#" onclick="showShippingReturns(); return false;">Shipping & Returns</a></li>
         <li><a href="#" onclick="showSizeGuide(); return false;">Size Guide</a></li>
-        <li><a href="#" onclick="showFAQ(); return false;">FAQ</a></li>
+        <li><a href="#" onclick="openFaq()">FAQ</a></li>
+
     </ul>
 </div>
    
@@ -2201,14 +2235,22 @@ function showFAQ() {
 
 
 
+// OPEN FAQ MODAL
 function openFaq() {
     document.getElementById('faqModal').style.display = 'block';
 }
 
-function toggleFaq(element) {
-    const answer = element.nextElementSibling;
-    answer.style.display = answer.style.display === "block" ? "none" : "block";
+// CLOSE ANY MODAL
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
 }
+
+// TOGGLE FAQ ANSWERS
+function toggleFaq(element) {
+    let answer = element.nextElementSibling;
+    answer.style.display = (answer.style.display === "block") ? "none" : "block";
+}
+
 
 
     </script>
