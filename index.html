@@ -2178,8 +2178,9 @@ function showFAQ() {
         </div>
     `;
 
-    const faqModalContent = document.querySelector("#faqModal .modal-content");
-    faqModalContent.innerHTML = content;
+    document.getElementById("customerServiceContent").innerHTML = content;
+    openModal("customerServiceModal");
+
 }
 
 
@@ -2210,7 +2211,6 @@ function toggleFaq(element) {
         <div id="customerServiceContent"></div>
     </div>
 </div>
-
 
 
 
